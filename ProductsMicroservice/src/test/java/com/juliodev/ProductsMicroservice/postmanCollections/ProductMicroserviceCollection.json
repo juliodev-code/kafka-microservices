@@ -1,0 +1,31 @@
+{
+  "info": {
+    "_postman_id": "1776047974348",
+    "name": "ProductMicroservice",
+    "description": "",
+    "schema": "https://schema.postman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "http://localhost:49539/products",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:49539/products",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "products"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"title\":\"IPhone 13\", \"price\":800, \"quantity\":21}"
+        }
+      }
+    }
+  ]
+}
