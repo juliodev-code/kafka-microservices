@@ -8,7 +8,6 @@ import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 
 import static com.juliodev.ProductsMicroservice.constants.ProductMicroserviceConstants.TOPIC_NAME;
 
@@ -22,7 +21,7 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public String createProduct(CreateProductRestModel productRestModel) {
+    public String createProduct(CreateProductRestModel productRestModel) throws Exception {
         String productId = UUID.randomUUID().toString();
         //TODO:Persist product details into a database table before publishing the event
         ProductCreatedEvent productCreatedEvent = new ProductCreatedEvent(
@@ -30,16 +29,15 @@ public class ProductServiceImpl implements ProductService{
                 productRestModel.getTitle(),
                 productRestModel.getPrice(),
                 productRestModel.getQuantity());
-        CompletableFuture<SendResult<String, ProductCreatedEvent>> future = kafkaTemplate
-                .send(TOPIC_NAME,productId, productCreatedEvent);
 
-        future.whenComplete((result, exception)->{
-            if(exception != null){
-                LOGGER.error("***** Failed to send the message:" + exception.getMessage());
-            } else{
-                LOGGER.info("***** Message send successfully" + result.getRecordMetadata());
-            }
-        });
+        LOGGER.info("***** Before publishing a ProductCreatedEvent");
+
+        SendResult<String, ProductCreatedEvent> result = kafkaTemplate
+                .send(TOPIC_NAME,productId, productCreatedEvent).get();
+
+        LOGGER.info("Partition: " + result.getRecordMetadata().partition());
+        LOGGER.info("Topic: " + result.getRecordMetadata().topic());
+        LOGGER.info("Offset: " + result.getRecordMetadata().offset());
 
         LOGGER.info("***** Returning Product ID");
         return productId;
