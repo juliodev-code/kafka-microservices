@@ -2,5 +2,5 @@ package com.juliodev.ProductsMicroservice.constants;
 
 public class ProductMicroserviceConstants {
 
-    public static final String TOPIC_NAME = "product-created-events-topic";
+    public static final String TOPIC_NAME = "topic1";
 }
