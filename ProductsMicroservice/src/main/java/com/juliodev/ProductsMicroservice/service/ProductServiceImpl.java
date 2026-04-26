@@ -1,6 +1,7 @@
 package com.juliodev.ProductsMicroservice.service;
 
 import com.juliodev.ProductsMicroservice.rest.CreateProductRestModel;
+import com.juliodev.core.ProductCreatedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.core.KafkaTemplate;

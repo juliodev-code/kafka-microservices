@@ -1,4 +1,4 @@
-package com.juliodev.ProductsMicroservice.service;
+package com.juliodev.core;
 
 import java.math.BigDecimal;
 
